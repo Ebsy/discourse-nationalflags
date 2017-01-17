@@ -1,10 +1,10 @@
 # Discourse National Flags Plugin
 
 ## Example
-![](example.png)
+![](example.PNG)
 
 ## User Settings
-![](example2.png)
+![](example2.PNG)
 
 # Installing
 
