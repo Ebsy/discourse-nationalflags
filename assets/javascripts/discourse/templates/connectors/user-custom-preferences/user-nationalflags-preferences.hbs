@@ -1,0 +1,8 @@
+{{#if siteSettings.nationalflag_enabled}}
+  <div class="control-group nationalflags">
+    <label class="control-label">National Flag</label>
+    <div class="controls">
+      {{combo-box valueAttribute="name" nameChanges=true content=natflaglist value=model.custom_fields.nationalflag_iso }}
+    </div>
+  </div>
+{{/if}}
