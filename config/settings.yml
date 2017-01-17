@@ -2,3 +2,6 @@ plugins:
   nationalflag_enabled:
     default: true
     client: true
+  nationalflag_iso:
+    default: "none"
+    client: true
