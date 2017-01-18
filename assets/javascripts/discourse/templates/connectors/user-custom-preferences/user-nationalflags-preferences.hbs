@@ -3,6 +3,7 @@
     <label class="control-label">National Flag</label>
     <div class="controls">
       {{combo-box valueAttribute="name" nameChanges=true content=natflaglist value=model.custom_fields.nationalflag_iso }}
+      <img class="nationalflag-usersummary" src="/plugins/discourse-nationalflags/images/nationalflags/{{model.custom_fields.nationalflag_iso}}.png" />
     </div>
   </div>
 {{/if}}
