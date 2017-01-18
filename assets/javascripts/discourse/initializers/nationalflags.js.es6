@@ -14,7 +14,7 @@ function initializeNationalFlags(api, siteSettings) {
     let result = '';
 
     if (dec.attrs && dec.attrs.hasOwnProperty('userCustomFields')) {
-      if (!dec.attrs.userCustomFields.hasOwnProperty('nationalflag_iso')) {
+      if (dec.attrs.userCustomFields.hasOwnProperty('nationalflag_iso')) {
         result = dec.attrs.userCustomFields.nationalflag_iso;
       } else {
         result = 'none'
