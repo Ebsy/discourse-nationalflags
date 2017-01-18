@@ -10,12 +10,13 @@ function initializeNationalFlags(api, siteSettings) {
   }
 
   api.decorateWidget('poster-name:after', dec => {
-    console.log(dec)
     let result = '';
 
-    if (dec.attrs && dec.attrs.userCustomFields && dec.attrs.userCustomFields.nationalflag_iso) {
+    if (typeof dec.attrs !== 'undefined' && typeof dec.attrs.userCustomFields !== 'undefined' && typeof dec.attrs.userCustomFields.nationalflag_iso !== 'undefined') {
+      console.log('found!')
       result = dec.attrs.userCustomFields.nationalflag_iso;
     } else {
+      console.log('not found!')
       result = 'none'
     }
 
