@@ -13,10 +13,10 @@ function initializeNationalFlags(api, siteSettings) {
     let result = '';
 
     if (typeof dec.attrs !== 'undefined' && typeof dec.attrs.userCustomFields !== 'undefined' && typeof dec.attrs.userCustomFields.nationalflag_iso !== 'undefined') {
-      console.log('found!')
+      //console.log('found!')
       result = dec.attrs.userCustomFields.nationalflag_iso;
     } else {
-      console.log('not found!')
+      //console.log('not found!')
       result = 'none'
     }
 
