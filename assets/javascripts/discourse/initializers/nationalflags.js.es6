@@ -10,14 +10,16 @@ function initializeNationalFlags(api, siteSettings) {
   }
 
   api.decorateWidget('poster-name:after', dec => {
-    const userNationalFlag = dec.attrs.userCustomFields.nationalflag_iso;
+    console.log(dec.attrs)
     let result = '';
 
-    if (!userNationalFlag) {
-      result = 'none'
+    if (dec.attrs.hasOwnProperty('userCustomFields')) {
+      if (!dec.attrs.userCustomFields.hasOwnProperty('nationalflag_iso')) {
+        result = dec.attrs.userCustomFields.nationalflag_iso;
+      } else {
+        result = 'none'
+      }
     }
-
-    result = userNationalFlag;
 
     return dec.h('img', {
       className: "nationalflag-post",

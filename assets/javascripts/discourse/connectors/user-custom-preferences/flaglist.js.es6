@@ -1,6 +1,9 @@
 export default {
 
   files: [{
+    "name": "none",
+    "value": "none.png"
+  },{
     "name": "ad",
     "value": "ad.png"
   }, {
