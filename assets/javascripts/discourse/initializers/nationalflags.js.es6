@@ -10,10 +10,19 @@ function initializeNationalFlags(api, siteSettings) {
   }
 
   api.decorateWidget('poster-name:after', dec => {
+    const userNationalFlag = dec.attrs.userCustomFields.nationalflag_iso;
+    let result = '';
+
+    if (!userNationalFlag) {
+      result = 'none'
+    }
+
+    result = userNationalFlag;
+
     return dec.h('img', {
       className: "nationalflag-post",
       attributes: {
-        src: "/plugins/discourse-nationalflags/images/nationalflags/" + dec.attrs.userCustomFields.nationalflag_iso + ".png"
+        src: "/plugins/discourse-nationalflags/images/nationalflags/" + result + ".png"
       }
     });
   });
