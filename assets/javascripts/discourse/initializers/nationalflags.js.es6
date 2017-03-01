@@ -17,6 +17,10 @@ function initializeNationalFlags(api, siteSettings) {
       result = dec.attrs.userCustomFields.nationalflag_iso;
     }
 
+    if (!result || result === 'none') {
+      return;
+    }
+
     return dec.h('img', {
       className: "nationalflag-post",
       attributes: {
