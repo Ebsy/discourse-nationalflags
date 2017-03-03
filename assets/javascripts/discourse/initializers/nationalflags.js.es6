@@ -1,6 +1,8 @@
 import {h} from 'virtual-dom';
 import {withPluginApi} from 'discourse/lib/plugin-api';
-import {ajax} from 'discourse/lib/ajax'
+import {ajax} from 'discourse/lib/ajax';
+
+// import Ember from 'ember';
 
 function initializeNationalFlags(api, siteSettings) {
   const nationalflagsEnabled = siteSettings.nationalflag_enabled;
@@ -12,12 +14,13 @@ function initializeNationalFlags(api, siteSettings) {
   api.decorateWidget('poster-name:after', dec => {
     let result = 'none';
 
-    if (typeof dec.attrs !== 'undefined' && typeof dec.attrs.userCustomFields !== 'undefined' && typeof dec.attrs.userCustomFields.nationalflag_iso !== 'undefined') {
-      //console.log('found!')
+    if (dec.attrs && dec.attrs.userCustomFields && dec.attrs.userCustomFields.nationalflag_iso) {
       result = dec.attrs.userCustomFields.nationalflag_iso;
+      // Ember.Logger.debug(result)
     }
 
     if (!result || result === 'none') {
+      // Ember.Logger.debug('NOT FOUND!')
       return;
     }
 
