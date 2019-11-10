@@ -11,6 +11,50 @@ PLUGIN_NAME = "discourse-nationalflags"
 DiscoursePluginRegistry.serialized_current_user_fields << "nationalflag_iso"
 
 after_initialize do
+
+  module ::DiscourseNationalFlags
+    class Engine < ::Rails::Engine
+      engine_name "discourse_national_flags"
+      isolate_namespace DiscourseNationalFlags
+    end
+  end
+
+  require_dependency 'about_controller'
+
+  Discourse::Application.routes.append do
+    mount ::DiscourseNationalFlags::Engine, at: 'natflags'
+  end
+
+  ::DiscourseNationalFlags::Engine.routes.draw do
+    get "/flags" => "flags#flags"
+  end
+
+    class ::DiscourseNationalFlags::Flag
+      attr_reader :code, :pic
+      def initialize(code, pic)
+          @code = code
+          @pic = pic
+      end
+  end
+
+class ::DiscourseNationalFlags::FlagsController < ::ApplicationController
+
+    def flags
+        raw_flags = YAML.safe_load(File.read(File.join(Rails.root, 'plugins', 'discourse-nationalflags', 'config', 'flags.yml')))
+
+        flagscollection = []
+
+        raw_flags.map do |code, pic| 
+            # This is super hacky.  Adding the trailing space actually stops search breaking in the dropdown! (and doesn't compromise the view!)
+            # Feeding just name, name will break search
+            flagscollection << DiscourseNationalFlags::Flag.new(code, pic)
+        end
+
+        render json: flagscollection
+    end
+end
+
+
   public_user_custom_fields_setting = SiteSetting.public_user_custom_fields
   if public_user_custom_fields_setting.empty?
     SiteSetting.set("public_user_custom_fields", "nationalflag_iso")
@@ -78,3 +122,24 @@ end
 register_asset "javascripts/discourse/templates/connectors/user-custom-preferences/user-nationalflags-preferences.hbs"
 register_asset "javascripts/discourse/templates/connectors/user-profile-primary/show-user-card.hbs"
 register_asset "stylesheets/nationalflags.scss"
+
+DiscourseEvent.on(:custom_wizard_ready) do
+  if defined?(CustomWizard) == 'constant' && CustomWizard.class == Module
+    CustomWizard::Field.add_assets('national-flag', 'discourse-nationalflags', ['components', 'templates'])
+
+    ## user.geo_location requires location['geo_location'] to be the value
+    CustomWizard::Builder.add_field_validator('national-flag') do |field, updater, step_template|
+      if step_template['actions'].present?
+        step_template['actions'].each do |a|
+          if a['type'] === 'update_profile'
+            a['profile_updates'].each do |pu|
+              if pu['key'] === field['id'] && pu['value_custom'] === 'nationalflag_iso'
+                updater.fields[field['id']] = updater.fields[field['id']]['nationalflag_iso']
+              end
+            end
+          end
+        end
+      end
+    end
+  end
+end
