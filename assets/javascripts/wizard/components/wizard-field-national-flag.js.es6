@@ -3,7 +3,6 @@ import { ajax } from 'wizard/lib/ajax';
 
 export default Ember.Component.extend({
   layoutName: 'javascripts/wizard/templates/components/wizard-field-national-flag',
-  context: Ember.computed.alias('wizard.id'),
   natflaglist: [],
 
   @on('init')
@@ -21,5 +20,10 @@ export default Ember.Component.extend({
 
       this.set('natflaglist', localised_flags);
     })
+  },
+
+  @computed('field.value')
+  flagsource() {
+    return  (this.get('field.value')==null) ? 'none' : this.get('field.value')
   }
 });
