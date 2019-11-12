@@ -1,13 +1,13 @@
 <div class="control-group nationalflags">
-<label class="control-label">National Flag</label>
-<div class="controls">
-    {{combo-box
-        nameProperty="description"
-        valueAttribute="code"
-        nameChanges=true
-        content=natflaglist
-        none=none
-        value=field.value }}
-    <img class="nationalflag-usersummary" src="/plugins/discourse-nationalflags/images/nationalflags/{{flagsource}}.png" />
-</div>
+    <label class="control-label">{{i18n 'flags.label'}}</label>
+    <div class="controls">
+        {{combo-box
+            nameProperty="description"
+            valueAttribute="code"
+            nameChanges=true
+            content=natflaglist
+            none=none
+            value=field.value }}
+        <img class="nationalflag-usersummary" src="/plugins/discourse-nationalflags/images/nationalflags/{{flagsource}}.png" />
+    </div>
 </div>

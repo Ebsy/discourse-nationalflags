@@ -1,7 +1,7 @@
---- 
 en: 
   js: 
     flags: 
+      label: "National Flag"
       description: 
         ad: Andorra
         ae: "United Arab Emirates"
