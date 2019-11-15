@@ -31,6 +31,21 @@ function initializeNationalFlags(api, siteSettings) {
       }
     });
   });
+
+  api.modifyClass('route:preferences', {
+    afterModel(model) {
+      return ajax('/natflags/flags').then(natflags => {
+        let localised_flags = [];
+        localised_flags = natflags.flags.map (element => {
+          return {  code: element.code, 
+            pic: element.pic, 
+            description: I18n.t(`flags.description.${element.code}`)
+          }
+        });
+        model.set('natflaglist', localised_flags);
+      })
+    }
+  });
 }
 
 export default {

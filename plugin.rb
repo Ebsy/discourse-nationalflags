@@ -21,8 +21,6 @@ after_initialize do
 
   load File.expand_path('../lib/flags.rb', __FILE__)
 
-  require_dependency 'about_controller'
-
   Discourse::Application.routes.append do
     mount ::DiscourseNationalFlags::Engine, at: 'natflags'
   end
