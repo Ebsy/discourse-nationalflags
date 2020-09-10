@@ -74,7 +74,6 @@ en:
         es: Spain
         et: Ethiopia
         eu: Europe
-        false: Norway
         fi: Finland
         fj: Fiji
         fk: "Falkland Islands (Malvinas)"
@@ -177,7 +176,7 @@ en:
         ng: Nigeria
         ni: Nicaragua
         nl: Netherlands         
-        no: Norway
+        'no': Norway
         none: "No flag"
         np: Nepal
         nr: Nauru
