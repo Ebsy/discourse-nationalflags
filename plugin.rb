@@ -67,7 +67,7 @@ register_asset "stylesheets/nationalflags.scss"
 
 DiscourseEvent.on(:custom_wizard_ready) do
   if defined?(CustomWizard) == 'constant' && CustomWizard.class == Module
-    CustomWizard::Field.add_assets('national-flag', 'discourse-nationalflags', ['components', 'templates'])
+    CustomWizard::Field.register('national-flag', 'discourse-nationalflags', ['components', 'templates'])
 
     CustomWizard::Builder.add_field_validator('national-flag') do |field, updater, step_template|
       if step_template['actions'].present?
