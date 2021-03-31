@@ -1,5 +1,11 @@
 en: 
-  js: 
+  admin_js:
+    admin:
+      wizard:
+        field:
+          type:
+            national-flag: "National Flag"
+  js:
     flags: 
       label: "National Flag"
       description: 

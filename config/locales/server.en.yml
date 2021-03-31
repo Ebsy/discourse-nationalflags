@@ -1,3 +1,5 @@
 en:
   site_settings:
     nationalflag_enabled: "Display users' National Flags"
+  wizard:
+    flag_not_exists: "This flag doesn't exist"
