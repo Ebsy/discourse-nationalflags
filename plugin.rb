@@ -20,6 +20,7 @@ after_initialize do
   end
 
   load File.expand_path('../lib/flags.rb', __FILE__)
+  load File.expand_path('../lib/flag_list.rb', __FILE__)
 
   Discourse::Application.routes.append do
     mount ::DiscourseNationalFlags::Engine, at: 'natflags'
@@ -68,17 +69,12 @@ register_asset "stylesheets/nationalflags.scss"
 DiscourseEvent.on(:custom_wizard_ready) do
   if defined?(CustomWizard) == 'constant' && CustomWizard.class == Module
     CustomWizard::Field.register('national-flag', 'discourse-nationalflags', ['components', 'templates'])
-    CustomWizard::UpdateValidator.add_field_validator('national-flag') do |field, updater, step_template|
-      if step_template['actions'].present?
-        step_template['actions'].each do |a|
-          if a['type'] === 'update_profile'
-            a['profile_updates'].each do |pu|
-              if pu['key'] === field['id'] && pu['value_custom'] === 'nationalflag_iso'
-                updater.fields[field['id']] = updater.fields[field['id']]['nationalflag_iso']
-              end
-            end
-          end
-        end
+    CustomWizard::UpdateValidator.add_field_validator(0, 'national-flag') do |field, value, updater|
+      field_id = field.id.to_s
+      list = ::DiscourseNationalFlags::FlagList.list
+      map_codes = list.map(&:code)
+      unless map_codes.include?(value)
+        updater.errors.add(field.id, I18n.t('wizard.field.flag_not_exists'))
       end
     end
   end
