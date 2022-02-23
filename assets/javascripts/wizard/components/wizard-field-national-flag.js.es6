@@ -11,12 +11,17 @@ export default Ember.Component.extend({
       url:  '/natflags/flags',
       type: 'GET'
     }).then((natflags) => {
-
       let localised_flags = [];
-      localised_flags = natflags.flags.map (element => {
-        return {  code: element.code, 
-                  pic: element.pic, 
-                  description: I18n.t(`flags.description.${element.code}`) }});
+
+      localised_flags = natflags.flags
+        .map((element) => {
+          return {
+            code: element.code,
+            pic: element.pic,
+            description: I18n.t(`flags.description.${element.code}`)
+          }
+        })
+        .sortBy('description');
 
       this.set('natflaglist', localised_flags);
     })
