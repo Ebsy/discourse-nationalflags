@@ -69,7 +69,8 @@ after_initialize do
   on(:user_created) do |user|
     if user.ip_address
       geocoder_result = Geocoder.search(user.ip_address.to_s)
-      if country = geocoder_result.first.data["country"] && flags[country.downcase]
+      country = geocoder_result.first.data["country"] if geocoder_result.first
+      if country && flags[country.downcase]
         user.custom_fields['nationalflag_iso'] = country.downcase
         user.save_custom_fields
       end
