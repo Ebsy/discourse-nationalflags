@@ -5,3 +5,6 @@ plugins:
   nationalflag_iso:
     default: "none"
     client: true
+  abstract_api_key_for_bulk_assign:
+    default: ''
+    client: true

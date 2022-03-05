@@ -1,5 +1,6 @@
 en:
   site_settings:
     nationalflag_enabled: "Display users' National Flags"
+    abstract_api_key_for_bulk_assign: "Add the API KEY from https://www.abstractapi.com to retrieve the IP Locations"
   wizard:
     flag_not_exists: "This flag doesn't exist"
