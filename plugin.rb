@@ -1,8 +1,11 @@
+# frozen_string_literal: true
 # name: discourse-nationalflags
 # about: Display National Flags from User's home countries.
 # version: 2.0
 # authors: Neil Ebrey <neil.ebrey@gmail.com>, Rob Barrow <merefield@gmail.com>
 # url: https://github.com/Ebsy/discourse-nationalflags
+
+gem 'geocoder', '1.7.3', require: true
 
 enabled_site_setting :nationalflag_enabled
 
@@ -21,6 +24,7 @@ after_initialize do
 
   load File.expand_path('../lib/flags.rb', __FILE__)
   load File.expand_path('../lib/flag_list.rb', __FILE__)
+  load File.expand_path('../lib/tasks/flags.rake', __FILE__)
 
   Discourse::Application.routes.append do
     mount ::DiscourseNationalFlags::Engine, at: 'natflags'
@@ -45,7 +49,7 @@ after_initialize do
   User.register_custom_field_type('nationalflag_iso', :text)
 
   register_editable_user_custom_field :nationalflag_iso if defined? register_editable_user_custom_field
-  
+
   if SiteSetting.nationalflag_enabled then
     add_to_serializer(:post, :user_signature, false) {
       object.user.custom_fields['nationalflag_iso']
@@ -59,6 +63,18 @@ after_initialize do
         object.custom_fields
       end
     }
+  end
+
+  flags = YAML.safe_load(File.read(File.join(Rails.root, 'plugins', 'discourse-nationalflags', 'config', 'flags.yml')))
+  on(:user_created) do |user|
+    if user.ip_address
+      geocoder_result = Geocoder.search(user.ip_address.to_s)
+      country = geocoder_result.first.data["country"] if geocoder_result.first
+      if country && flags[country.downcase]
+        user.custom_fields['nationalflag_iso'] = country.downcase
+        user.save_custom_fields
+      end
+    end
   end
 end
 
