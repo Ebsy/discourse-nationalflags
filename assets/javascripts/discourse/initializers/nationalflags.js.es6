@@ -33,6 +33,7 @@ function initializeNationalFlags(api, siteSettings) {
   });
 
   api.modifyClass('route:preferences', {
+    pluginId: 'discourse-nationalflags',
     afterModel(model) {
       return ajax('/natflags/flags').then(natflags => {
         let localised_flags = [];
