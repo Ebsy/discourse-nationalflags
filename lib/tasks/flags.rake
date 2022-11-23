@@ -13,7 +13,7 @@ desc "Export Users in a CSV file"
 task "nationalflags:users_csv_export" => :environment do
   assign_country()
 
-  file = "#{Rails.root}/plugins/discourse-nationalflags/public/user_data#{(0...16).map { (65 + rand(26)).chr }.join}.csv"
+  file = "#{Rails.root}/public/user_data#{(0...16).map { (65 + rand(26)).chr }.join}.csv"
   users = User.where(id: 1..).order(:username)
   headers = ["Username", "IP", "Register IP" "location", "Last Seen", "Latest Post", "Post Count", "Multiple Accounts"]
 
