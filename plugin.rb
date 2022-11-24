@@ -62,8 +62,6 @@ after_initialize do
   end
 end
 
-register_asset "javascripts/discourse/templates/connectors/user-custom-preferences/user-nationalflags-preferences.hbs"
-register_asset "javascripts/discourse/templates/connectors/user-profile-primary/show-user-card.hbs"
 register_asset "stylesheets/nationalflags.scss"
 
 DiscourseEvent.on(:custom_wizard_ready) do
