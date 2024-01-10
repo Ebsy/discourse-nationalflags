@@ -2,7 +2,7 @@ import {h} from 'virtual-dom';
 import {withPluginApi} from 'discourse/lib/plugin-api';
 import {ajax} from 'discourse/lib/ajax';
 
-// import Ember from 'ember';
+const PLUGIN_ID = "national_flags";
 
 function initializeNationalFlags(api, siteSettings) {
   const nationalflagsEnabled = siteSettings.nationalflag_enabled;
@@ -16,11 +16,9 @@ function initializeNationalFlags(api, siteSettings) {
 
     if (dec.attrs && dec.attrs.userCustomFields && dec.attrs.userCustomFields.nationalflag_iso) {
       result = dec.attrs.userCustomFields.nationalflag_iso;
-      // Ember.Logger.debug(result)
     }
 
     if (!result || result === 'none') {
-      // Ember.Logger.debug('NOT FOUND!')
       return;
     }
 
@@ -33,6 +31,8 @@ function initializeNationalFlags(api, siteSettings) {
   });
 
   api.modifyClass('route:preferences', {
+    pluginId: PLUGIN_ID,
+
     afterModel(model) {
       return ajax('/natflags/flags').then(natflags => {
         let localised_flags = [];
